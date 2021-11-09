@@ -1,0 +1,19 @@
+main {
+    background-color: aquamarine;
+    display: flex;
+}
+
+footer {
+    background-color: orange;
+}
+
+
+#img-text-parent-div {
+    display: flex;
+}
+
+
+#results-div {
+    background-color: blue;
+    height: 100%;
+}
