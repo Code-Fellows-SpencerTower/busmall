@@ -1,10 +1,8 @@
 'use strict';
 // Globals //
-const clickCount = 0;
+let clickCount = 0;
 
 const maxRounds = 3;
-
-// const imgNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 
 // Constructors //
 
@@ -13,7 +11,6 @@ function ImageObject(name, filePath) {
     this.filePath = filePath;
     this.timesShown = 0;
     this.clicks = 0;
-    this.timesShown = 0;
     // entire object pushed into array
     ImageObject.allImgObjects.push(this);
 }
@@ -67,17 +64,16 @@ function randomImage() {
 // change fx name
 function pickRandomImages() {
 
-    const image1 = randomImage();
-    const image2 = randomImage();
-    const image3 = randomImage();
+    var image1 = randomImage();
+    var image2 = randomImage();
+    var image3 = randomImage();
 
     // make into do-while loop
-    // BREAKS
     while ((image1.filePath === image2.filePath) || (image1.filePath === image3.filePath) || (image2.filePath === image3.filePath)) {
 
-        const image1 = randomImage();
-        const image2 = randomImage();
-        const image3 = randomImage();
+        image1 = randomImage();
+        image2 = randomImage();
+        image3 = randomImage();
     }
 
     renderImages(image1, image2, image3);
@@ -93,27 +89,57 @@ function renderImages(image1, image2, image3) {
 
 
 function addEventListener() {
-    // handle click
-    // attach listener to container instead of every element
-    const imageContainerEl = document.getElementById('main');
+    // attach listener to img-div instead of each image
+    const imageContainerEl = document.getElementById('img-div');
     imageContainerEl.addEventListener('click', handleClick);
-    handleClick();
-
 }
 
-// check event
+// Refactor with constructor var for image
 function handleClick(event) {
     console.log(event.target);
-}
 
+    clickCount += 1
+    
+    // rough way to do it but it works, will refactor later
+    const imageName = event.target.alt;
+    let clickedImage = null;
+    
+    // get image object from constructor array
+    for (let i = 0; i < ImageObject.allImgObjects.length; i += 1) {
+        // check for matching filepath
+        if (ImageObject.allImgObjects[i].name === imageName) {
+            console.log('Clicked Image Name: ' + ImageObject.allImgObjects[i].name)
+            clickedImage = ImageObject.allImgObjects[i];
+            console.log('Clicked Image Clicks: ' + clickedImage.clicks);
+        }
+    }
+
+    console.log('IMAGE FILEPATH: ' + imageName);
+
+    if (event.target.id === 'img-1') {
+        clickedImage.clicks += 1
+
+    } else if (event.target.id === 'img-2') {
+        clickedImage.clicks += 1
+
+    } else if (event.target.id === 'img-3') {
+        clickedImage.clicks += 1
+
+    } else {
+        alert('Please click an image.');
+    }
+
+}
 
 
 // Have a start function
 function start() {
+    // listener needs to be attached first
+    addEventListener();
     defineImages();
     randomImage();
     pickRandomImages();
-    addEventListener();
+    
 }
 
 start();
