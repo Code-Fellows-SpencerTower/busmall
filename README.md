@@ -11,7 +11,9 @@
 
 - add event listeners
 
-- image click handler
+- remove listeners
+
+- handle image click events
 
 - track results
 

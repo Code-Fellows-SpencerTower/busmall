@@ -1,13 +1,13 @@
 'use strict';
-
+// Globals //
 const clickCount = 0;
 
 const maxRounds = 3;
 
 // const imgNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 
+// Constructors //
 
-// Image object constructor
 function ImageObject(name, filePath) {
     this.name = name;
     this.filePath = filePath;
@@ -20,17 +20,24 @@ function ImageObject(name, filePath) {
 
 ImageObject.allImgObjects = [];
 
-// render function that takes html image element id
+// add constructor vars for image 1, 2, 3 (update renderImages, change while to do-while)
+
 ImageObject.prototype.render = function (id) {
-    // get <img> from html
-    const imgEl = document.getElementById(id);
-    imgEl.src = this.filePath
+
+    const imageEl = document.getElementById(id);
+    imageEl.src = this.filePath;
+    imageEl.alt = this.name;
     this.timesShown += 1;
+    // add caption element
+
     console.log('Image Shown: ' + this.name + ' ' + this.timesShown);
 
 }
 
-function defineImgs() {
+// Functions //
+
+function defineImages() {
+
     const bag = new ImageObject('bag', '/assets/bag.jpg');
     const banana = new ImageObject('banana', '/assets/banana.jpg');
     const bathroom = new ImageObject('bathroom', '/assets/bathroom.jpg');
@@ -50,74 +57,65 @@ function defineImgs() {
 }
 
 function randomImage() {
+
     const randomIndex = [Math.floor(Math.random() * ImageObject.allImgObjects.length)];
-    const randomImage = ImageObject.allImgObjects[randomIndex];
-    return randomImage;
+
+    return ImageObject.allImgObjects[randomIndex];
+
 }
 
 // change fx name
-function randomizeImages() {
+function pickRandomImages() {
 
     const image1 = randomImage();
-    image1.render('img-1');
-
-    
     const image2 = randomImage();
-    image2.render('img-2');
-
     const image3 = randomImage();
-    image3.render('img-3');
 
-    // images not the same
-    // make in to do-while loop
-    // while ((image1.src === image2.src) || (image1.src === image3.src) || (image2.src === image3.src)) {
-    //}
+    // make into do-while loop
+    // BREAKS
+    while ((image1.filePath === image2.filePath) || (image1.filePath === image3.filePath) || (image2.filePath === image3.filePath)) {
+
+        const image1 = randomImage();
+        const image2 = randomImage();
+        const image3 = randomImage();
+    }
+
+    renderImages(image1, image2, image3);
+
 }
 
-// count times image shown
-// count times image clicked
+function renderImages(image1, image2, image3) {
+
+    image1.render('img-1');
+    image2.render('img-2');
+    image3.render('img-3');
+}
 
 
-defineImgs();
-randomImage();
-randomizeImages();
+function addEventListener() {
+    // handle click
+    // attach listener to container instead of every element
+    const imageContainerEl = document.getElementById('main');
+    imageContainerEl.addEventListener('click', handleClick);
+    handleClick();
 
-// const image1 = document.getElementById('img-1');
-// image1.src = randomImage().filePath;
-// console.log('image1.src: ' + image1.src);
+}
 
-
-// const img1 = document.getElementById('img-1');
-// img1.addEventListener('click', imgOneClick);
-// const img2 = document.getElementById('img-2');
-// img2.addEventListener('click', imgTwoClick);
-// const img3 = document.getElementById('img-3');
-// img3.addEventListener('click', imgThreeClick);
-
-// populate allImgs array
-//for (let i = 0; i < )
-
-// function imgOneClick() {
-//     alert('img1 clicked!');
-
-// }
-
-// function imgTwoClick() {
-//     alert('img2 clicked!');
-// }
-
-// function imgThreeClick() {
-//     alert('img3 clicked!');
-// }
+// check event
+function handleClick(event) {
+    console.log(event.target);
+}
 
 
 
+// Have a start function
+function start() {
+    defineImages();
+    randomImage();
+    pickRandomImages();
+    addEventListener();
+}
 
-
-// boots.render('img-1');
-// shark.render('img-2');
-// tauntaun.render('img-3');
-
-//console.log('ImageObject.allImgObjects: ' + ImageObject.allImgObjects[0].name);
+start();
 
 
