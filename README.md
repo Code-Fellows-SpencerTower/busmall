@@ -1,13 +1,13 @@
 # BusMall
 
 
-- define image objects
+- define image objects X
 
-- random index generator
+- random index generator X
 
-- image randomizer
+- image randomizer X
 
-- render images
+- render images X
 
 - add event listeners
 

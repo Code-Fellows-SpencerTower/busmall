@@ -13,6 +13,7 @@ function ImageObject(name, filePath) {
     this.filePath = filePath;
     this.timesShown = 0;
     this.clicks = 0;
+    this.timesShown = 0;
     // entire object pushed into array
     ImageObject.allImgObjects.push(this);
 }
@@ -25,6 +26,8 @@ ImageObject.prototype.render = function (id) {
     const imgEl = document.getElementById(id);
     imgEl.src = this.filePath
     this.timesShown += 1;
+    console.log('Image Shown: ' + this.name + ' ' + this.timesShown);
+
 }
 
 function defineImgs() {
@@ -50,24 +53,30 @@ function randomImage() {
     const randomIndex = [Math.floor(Math.random() * ImageObject.allImgObjects.length)];
     const randomImage = ImageObject.allImgObjects[randomIndex];
     return randomImage;
-    //console.log('randomIndex: ' + randomIndex);
 }
 
 // change fx name
 function randomizeImages() {
-    const image1 = document.getElementById('img-1');
-    image1.src = randomImage().filePath;
-    console.log('image1.src: ' + image1.src);
 
-    const image2 = document.getElementById('img-2');
-    image2.src = randomImage().filePath;
-    console.log('image2.src: ' + image2.src);
+    const image1 = randomImage();
+    image1.render('img-1');
 
-    const image3 = document.getElementById('img-3');
-    image3.src = randomImage().filePath;
-    console.log('image3.src ' + image3.src);
+    
+    const image2 = randomImage();
+    image2.render('img-2');
 
+    const image3 = randomImage();
+    image3.render('img-3');
+
+    // images not the same
+    // make in to do-while loop
+    // while ((image1.src === image2.src) || (image1.src === image3.src) || (image2.src === image3.src)) {
+    //}
 }
+
+// count times image shown
+// count times image clicked
+
 
 defineImgs();
 randomImage();
