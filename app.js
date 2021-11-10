@@ -131,8 +131,6 @@ function handleClick(event) {
 
 }
 
-
-// Have a start function
 function start() {
     // listener needs to be attached first
     addEventListener();
