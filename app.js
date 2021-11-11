@@ -28,29 +28,28 @@ ImageObject.prototype.render = function (id) {
     // add caption element
 
     console.log('Image Shown: ' + this.name + ' ' + this.timesShown);
-
 }
 
 // Functions //
 
 function defineImages() {
 
-    const bag = new ImageObject('bag', '/assets/bag.jpg');
-    const banana = new ImageObject('banana', '/assets/banana.jpg');
-    const bathroom = new ImageObject('bathroom', '/assets/bathroom.jpg');
-    const boots = new ImageObject('boots', '/assets/boots.jpg');
-    const bubblegum = new ImageObject('bubblegum', '/assets/bubblegum.jpg');
-    const chair = new ImageObject('chair', '/assets/chair.jpg');
-    const cthulu = new ImageObject('cthulu', '/assets/cthulhu.jpg');
-    const dogDuck = new ImageObject('dog-duck', '/assets/dog-duck.jpg');
-    const pen = new ImageObject('pet-sweep', '/assets/pet-sweep.jpg');
-    const scissors = new ImageObject('scissors', '/assets/scissors.jpg');
-    const shark = new ImageObject('shark', '/assets/shark.jpg');
-    const sweep = new ImageObject('sweep', '/assets/sweep.png');
-    const tauntaun = new ImageObject('tauntaun', '/assets/tauntaun.jpg');
-    const unicorn = new ImageObject('unicorn', '/assets/unicorn.jpg');
-    const waterCan = new ImageObject('water-can', '/assets/water-can.jpg');
-    const wineGlass = new ImageObject('wine-glass', '/assets/wine-glass.jpg');
+    const bag = new ImageObject('bag', '/img/bag.jpg');
+    const banana = new ImageObject('banana', '/img/banana.jpg');
+    const bathroom = new ImageObject('bathroom', '/img/bathroom.jpg');
+    const boots = new ImageObject('boots', '/img/boots.jpg');
+    const bubblegum = new ImageObject('bubblegum', '/img/bubblegum.jpg');
+    const chair = new ImageObject('chair', '/img/chair.jpg');
+    const cthulu = new ImageObject('cthulu', '/img/cthulhu.jpg');
+    const dogDuck = new ImageObject('dog-duck', '/img/dog-duck.jpg');
+    const pen = new ImageObject('pet-sweep', '/img/pet-sweep.jpg');
+    const scissors = new ImageObject('scissors', '/img/scissors.jpg');
+    const shark = new ImageObject('shark', '/img/shark.jpg');
+    const sweep = new ImageObject('sweep', '/img/sweep.png');
+    const tauntaun = new ImageObject('tauntaun', '/img/tauntaun.jpg');
+    const unicorn = new ImageObject('unicorn', '/img/unicorn.jpg');
+    const waterCan = new ImageObject('water-can', '/img/water-can.jpg');
+    const wineGlass = new ImageObject('wine-glass', '/img/wine-glass.jpg');
 }
 
 function randomImage() {
@@ -58,11 +57,10 @@ function randomImage() {
     const randomIndex = [Math.floor(Math.random() * ImageObject.allImgObjects.length)];
 
     return ImageObject.allImgObjects[randomIndex];
-
 }
 
 // change fx name
-function pickRandomImages() {
+function pickImages() {
 
     var image1 = randomImage();
     var image2 = randomImage();
@@ -77,8 +75,8 @@ function pickRandomImages() {
     }
 
     renderImages(image1, image2, image3);
-
 }
+
 
 function renderImages(image1, image2, image3) {
 
@@ -88,58 +86,117 @@ function renderImages(image1, image2, image3) {
 }
 
 
-function addEventListener() {
+function addImageEventListener() {
     // attach listener to img-div instead of each image
     const imageContainerEl = document.getElementById('img-div');
-    imageContainerEl.addEventListener('click', handleClick);
+    imageContainerEl.addEventListener('click', handleImageClick);
 }
 
 // Refactor with constructor var for image
-function handleClick(event) {
-    console.log(event.target);
+function handleImageClick(event) {
 
-    clickCount += 1
-    
-    // rough way to do it but it works, will refactor later
+    // rough way to do it, will refactor later
     const imageName = event.target.alt;
-    let clickedImage = null;
-    
+    let clickedImage;
+
     // get image object from constructor array
     for (let i = 0; i < ImageObject.allImgObjects.length; i += 1) {
-        // check for matching filepath
+        // check for matching name
         if (ImageObject.allImgObjects[i].name === imageName) {
-            console.log('Clicked Image Name: ' + ImageObject.allImgObjects[i].name)
             clickedImage = ImageObject.allImgObjects[i];
-            console.log('Clicked Image Clicks: ' + clickedImage.clicks);
         }
     }
 
-    console.log('IMAGE FILEPATH: ' + imageName);
+    console.log('CLICKED IMAGE NAME CHECK: ' + clickedImage.name);
+    console.log('CLICKED IMAGE INITIAL CLICK COUNT: ' + clickedImage.clicks);
 
     if (event.target.id === 'img-1') {
         clickedImage.clicks += 1
+        console.log('IMG 1 CLICKED - ID = ' + event.target.id);
+        console.log('CLICKED IMAGE CLICK COUNT: ' + clickedImage.clicks);
 
     } else if (event.target.id === 'img-2') {
         clickedImage.clicks += 1
+        console.log('IMG 2 CLICKED - ID = ' + event.target.id);
+        console.log('CLICKED IMAGE CLICK COUNT: ' + clickedImage.clicks);
 
     } else if (event.target.id === 'img-3') {
         clickedImage.clicks += 1
+        console.log('IMG 3 CLICKED - ID = ' + event.target.id);
+        console.log('CLICKED IMAGE CLICK COUNT: ' + clickedImage.clicks);
 
     } else {
         alert('Please click an image.');
     }
 
+    trackClickCount();
+    // randomize images
+    pickImages();
 }
+
+function removeImageEventListener() {
+    const imageContainerEl = document.getElementById('img-div');
+    imageContainerEl.removeEventListener('click', handleImageClick);
+}
+
+function renderResultsList() {
+
+    let resultsUlEl = document.getElementById('results-list');
+
+    let imageName, imageTimesShown, imageClicks;
+
+    for (let i = 0; i < ImageObject.allImgObjects.length; i += 1) {
+
+        const resultsLiEl = document.createElement('li');
+
+        imageName = ImageObject.allImgObjects[i].name;
+        // console.log('imageName = ' + imageName);
+        imageClicks = ImageObject.allImgObjects[i].clicks;
+        imageTimesShown = ImageObject.allImgObjects[i].timesShown;
+
+        resultsLiEl.textContent = `${imageName} has been shown ${imageTimesShown} times and clicked ${imageClicks} times.`
+
+        resultsUlEl.appendChild(resultsLiEl);
+
+
+    }
+
+    console.log('RENDER COMPLETE');
+}
+
+
+function trackClickCount() {
+    clickCount += 1
+
+    console.log('CLICK COUNT: ' + clickCount);
+
+    if (clickCount === maxRounds) {
+        removeImageEventListener();
+        showSubmitBtn();
+    }
+
+}
+
+function showSubmitBtn() {
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.hidden = false;
+    submitBtn.addEventListener('click', handleSubmitClick);
+}
+
+function handleSubmitClick(event) {
+    renderResultsList();
+    event.target.removeEventListener('click', handleSubmitClick);
+}
+
 
 function start() {
     // listener needs to be attached first
-    addEventListener();
+    addImageEventListener();
     defineImages();
     randomImage();
-    pickRandomImages();
-    
+    pickImages();
+
 }
 
 start();
-
 
