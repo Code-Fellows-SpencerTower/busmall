@@ -9,12 +9,12 @@
 
 - render images X
 
-- add event listeners
+- add event listeners X
 
-- remove listeners
+- handle image click events X
 
-- handle image click events
+- track clicks X
 
-- track results
+- remove listeners X
 
-- render results
+- render results list X
