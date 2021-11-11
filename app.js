@@ -164,6 +164,49 @@ function renderResultsList() {
     console.log('RENDER COMPLETE');
 }
 
+function renderResultsChart() {
+
+    const imageNames = [];
+    const imageClicks = [];
+
+    // get names and clicks from each image object and add to arrays
+    for (let i = 0; i < ImageObject.allImgObjects.length; i += 1) {
+        const imageObject = ImageObject.allImgObjects[i];
+
+        imageNames.push(imageObject.name);
+        imageClicks.push(imageObject.clicks);
+    }
+
+    // get canvas context
+    const ctx = document.getElementById('results-chart').getContext('2d');
+    const imageChart = new Chart(ctx, {
+        type: 'bar',
+
+        // data for chart, key-value pair
+        data: {
+            // provide array of names for labels
+            labels: imageNames,
+            datasets: [{
+                label: 'Product Clicks',
+                backgroundColor: 'rgb(200, 120, 142)',
+                borderColor: 'rgb(200, 120, 142)',
+                data: imageClicks
+            }]
+        },
+
+        // chart config options
+        options: {
+            scales: {
+                yAxis: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    console.log('END OF CHART FUNCTION');
+}
 
 function trackClickCount() {
     clickCount += 1
@@ -184,8 +227,10 @@ function showSubmitBtn() {
 }
 
 function handleSubmitClick(event) {
-    renderResultsList();
     event.target.removeEventListener('click', handleSubmitClick);
+    // refactor to new function
+    renderResultsList();
+    renderResultsChart();
 }
 
 

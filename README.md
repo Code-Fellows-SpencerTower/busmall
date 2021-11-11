@@ -13,8 +13,8 @@
 
 - handle image click events X
 
-- track clicks ~
+- track clicks X
 
 - remove listeners X
 
-- render results list
+- render results list X
