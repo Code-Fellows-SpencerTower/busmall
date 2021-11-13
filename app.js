@@ -2,7 +2,7 @@
 // Globals //
 let clickCount = 0;
 
-const maxRounds = 3;
+const maxRounds = 25;
 
 // Constructors //
 
