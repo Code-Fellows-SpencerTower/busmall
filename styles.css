@@ -12,18 +12,21 @@ footer {
 #results-div {
     background-color: rgb(252, 142, 8);
     height: 50%;
-    width: 50%;
+    width: 40%;
+    padding: 20px;
+}
+
+#img-div {
+    padding: 20px;
 }
 
 img {
     max-height: 200px;
     max-width: 200px;
-    /* makes images same size */
-    object-fit: cover; 
+    /* object-fit: cover; */
+    border: 2px solid black;
 }
 
-/* #text-div {
-    height: 200px;
-    width: 600px;
-    background-color: purple;
+/* h2 {
+    justify-content: center;
 } */

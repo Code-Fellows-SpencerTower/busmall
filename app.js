@@ -2,7 +2,7 @@
 // Globals //
 let clickCount = 0;
 
-const maxRounds = 25;
+const maxRounds = 3;
 
 // Constructors //
 
@@ -141,6 +141,9 @@ function removeImageEventListener() {
 
 function renderResultsList() {
 
+    const resultsDiv = document.getElementById('results-div');
+    resultsDiv.hidden = false;
+
     let resultsUlEl = document.getElementById('results-list');
 
     let imageName, imageTimesShown, imageClicks;
@@ -209,35 +212,62 @@ function renderResultsChart() {
 }
 
 function trackClickCount() {
+    
     clickCount += 1
-
-    console.log('CLICK COUNT: ' + clickCount);
-
     if (clickCount === maxRounds) {
         removeImageEventListener();
-        showSubmitBtn();
+        submitBtn();
     }
 
 }
 
-function showSubmitBtn() {
+
+
+
+function submitBtn() {
+
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.hidden = false;
     submitBtn.addEventListener('click', handleSubmitClick);
+
 }
 
 function handleSubmitClick(event) {
     event.target.removeEventListener('click', handleSubmitClick);
-    // refactor to new function
+    // store data in local storage
+    localStorage.setItem('stored-images', JSON.stringify(ImageObject.allImgObjects))
     renderResultsList();
     renderResultsChart();
+
+}
+
+function checkLocalStorage() {
+    
+    const storedImages = localStorage.getItem('stored-images');
+    if (storedImages) {
+        regenStoredImages(storedImages);
+    } else {
+        defineImages();
+    }
+}
+
+function regenStoredImages(json) {
+
+    const rawImagesArray = JSON.parse(json);
+
+    for (let i = 0; i < rawImagesArray.length; i += 1) {
+        const rawImage = rawImagesArray[i];
+        const newImage = new ImageObject(rawImage.name, rawImage.filePath);
+        newImage.clicks = rawImage.clicks;
+        newImage.timesShown = rawImage.timesShown;
+    }
 }
 
 
 function start() {
     // listener needs to be attached first
+    checkLocalStorage();
     addImageEventListener();
-    defineImages();
     randomImage();
     pickImages();
 
