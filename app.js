@@ -26,8 +26,6 @@ ImageObject.prototype.render = function (id) {
     imageEl.alt = this.name;
     this.timesShown += 1;
     // add caption element
-
-    console.log('Image Shown: ' + this.name + ' ' + this.timesShown);
 }
 
 // Functions //
@@ -73,10 +71,8 @@ function pickImages() {
         image2 = randomImage();
         image3 = randomImage();
     }
-
     renderImages(image1, image2, image3);
 }
-
 
 function renderImages(image1, image2, image3) {
 
@@ -84,7 +80,6 @@ function renderImages(image1, image2, image3) {
     image2.render('img-2');
     image3.render('img-3');
 }
-
 
 function addImageEventListener() {
     // attach listener to img-div instead of each image
@@ -107,23 +102,14 @@ function handleImageClick(event) {
         }
     }
 
-    console.log('CLICKED IMAGE NAME CHECK: ' + clickedImage.name);
-    console.log('CLICKED IMAGE INITIAL CLICK COUNT: ' + clickedImage.clicks);
-
     if (event.target.id === 'img-1') {
         clickedImage.clicks += 1
-        console.log('IMG 1 CLICKED - ID = ' + event.target.id);
-        console.log('CLICKED IMAGE CLICK COUNT: ' + clickedImage.clicks);
 
     } else if (event.target.id === 'img-2') {
         clickedImage.clicks += 1
-        console.log('IMG 2 CLICKED - ID = ' + event.target.id);
-        console.log('CLICKED IMAGE CLICK COUNT: ' + clickedImage.clicks);
 
     } else if (event.target.id === 'img-3') {
         clickedImage.clicks += 1
-        console.log('IMG 3 CLICKED - ID = ' + event.target.id);
-        console.log('CLICKED IMAGE CLICK COUNT: ' + clickedImage.clicks);
 
     } else {
         alert('Please click an image.');
@@ -141,6 +127,9 @@ function removeImageEventListener() {
 
 function renderResultsList() {
 
+    const resultsDiv = document.getElementById('results-div');
+    resultsDiv.hidden = false;
+
     let resultsUlEl = document.getElementById('results-list');
 
     let imageName, imageTimesShown, imageClicks;
@@ -150,18 +139,13 @@ function renderResultsList() {
         const resultsLiEl = document.createElement('li');
 
         imageName = ImageObject.allImgObjects[i].name;
-        // console.log('imageName = ' + imageName);
         imageClicks = ImageObject.allImgObjects[i].clicks;
         imageTimesShown = ImageObject.allImgObjects[i].timesShown;
 
         resultsLiEl.textContent = `${imageName} has been shown ${imageTimesShown} times and clicked ${imageClicks} times.`
 
         resultsUlEl.appendChild(resultsLiEl);
-
-
     }
-
-    console.log('RENDER COMPLETE');
 }
 
 function renderResultsChart() {
@@ -188,7 +172,7 @@ function renderResultsChart() {
             labels: imageNames,
             datasets: [{
                 label: 'Product Clicks',
-                backgroundColor: 'rgb(200, 120, 142)',
+                backgroundColor: 'rgb(165,42,42)',
                 borderColor: 'rgb(200, 120, 142)',
                 data: imageClicks
             }]
@@ -205,39 +189,60 @@ function renderResultsChart() {
             }
         }
     });
-    console.log('END OF CHART FUNCTION');
 }
 
 function trackClickCount() {
+
     clickCount += 1
-
-    console.log('CLICK COUNT: ' + clickCount);
-
     if (clickCount === maxRounds) {
         removeImageEventListener();
-        showSubmitBtn();
+        submitBtn();
     }
-
 }
 
-function showSubmitBtn() {
+function submitBtn() {
+
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.hidden = false;
     submitBtn.addEventListener('click', handleSubmitClick);
+
 }
 
 function handleSubmitClick(event) {
     event.target.removeEventListener('click', handleSubmitClick);
-    // refactor to new function
+    // store data in local storage
+    localStorage.setItem('stored-images', JSON.stringify(ImageObject.allImgObjects))
     renderResultsList();
     renderResultsChart();
+
 }
 
+function checkLocalStorage() {
+
+    const storedImages = localStorage.getItem('stored-images');
+    if (storedImages) {
+        regenStoredImages(storedImages);
+    } else {
+        defineImages();
+    }
+}
+
+function regenStoredImages(json) {
+
+    const rawImagesArray = JSON.parse(json);
+
+    for (let i = 0; i < rawImagesArray.length; i += 1) {
+        const rawImage = rawImagesArray[i];
+        const newImage = new ImageObject(rawImage.name, rawImage.filePath);
+        newImage.clicks = rawImage.clicks;
+        newImage.timesShown = rawImage.timesShown;
+    }
+}
 
 function start() {
     // listener needs to be attached first
+    checkLocalStorage();
     addImageEventListener();
-    defineImages();
     randomImage();
     pickImages();
 
