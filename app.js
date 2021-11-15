@@ -32,22 +32,22 @@ ImageObject.prototype.render = function (id) {
 
 function defineImages() {
 
-    const bag = new ImageObject('bag', '/img/bag.jpg');
-    const banana = new ImageObject('banana', '/img/banana.jpg');
-    const bathroom = new ImageObject('bathroom', '/img/bathroom.jpg');
-    const boots = new ImageObject('boots', '/img/boots.jpg');
-    const bubblegum = new ImageObject('bubblegum', '/img/bubblegum.jpg');
-    const chair = new ImageObject('chair', '/img/chair.jpg');
-    const cthulu = new ImageObject('cthulu', '/img/cthulhu.jpg');
-    const dogDuck = new ImageObject('dog-duck', '/img/dog-duck.jpg');
-    const pen = new ImageObject('pet-sweep', '/img/pet-sweep.jpg');
-    const scissors = new ImageObject('scissors', '/img/scissors.jpg');
-    const shark = new ImageObject('shark', '/img/shark.jpg');
-    const sweep = new ImageObject('sweep', '/img/sweep.png');
-    const tauntaun = new ImageObject('tauntaun', '/img/tauntaun.jpg');
-    const unicorn = new ImageObject('unicorn', '/img/unicorn.jpg');
-    const waterCan = new ImageObject('water-can', '/img/water-can.jpg');
-    const wineGlass = new ImageObject('wine-glass', '/img/wine-glass.jpg');
+    const bag = new ImageObject('bag', 'img/bag.jpg');
+    const banana = new ImageObject('banana', 'img/banana.jpg');
+    const bathroom = new ImageObject('bathroom', 'img/bathroom.jpg');
+    const boots = new ImageObject('boots', 'img/boots.jpg');
+    const bubblegum = new ImageObject('bubblegum', 'img/bubblegum.jpg');
+    const chair = new ImageObject('chair', 'img/chair.jpg');
+    const cthulu = new ImageObject('cthulu', 'img/cthulhu.jpg');
+    const dogDuck = new ImageObject('dog-duck', 'img/dog-duck.jpg');
+    const pen = new ImageObject('pet-sweep', 'img/pet-sweep.jpg');
+    const scissors = new ImageObject('scissors', 'img/scissors.jpg');
+    const shark = new ImageObject('shark', 'img/shark.jpg');
+    const sweep = new ImageObject('sweep', 'img/sweep.png');
+    const tauntaun = new ImageObject('tauntaun', 'img/tauntaun.jpg');
+    const unicorn = new ImageObject('unicorn', 'img/unicorn.jpg');
+    const waterCan = new ImageObject('water-can', 'img/water-can.jpg');
+    const wineGlass = new ImageObject('wine-glass', 'img/wine-glass.jpg');
 }
 
 function randomImage() {
